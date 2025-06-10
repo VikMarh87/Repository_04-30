@@ -33,11 +33,14 @@ export const test = base.extend ({
             password: process.env.PASSWORD,
             username: process.env.USERNAME,
         };
+        const incorrectUser = {
+            email: process.env.EMAIL,
+            password: process.env.PASSWORD + "1", 
+        };
         let app =  new App(page);
         await app.mainPage.open();
         await app.loginPage.gotoLogin();
-        await app.loginPage.login(registeredUser);
-        await use({ app, registeredUser }); 
+        await use({ app, registeredUser, incorrectUser }); 
     },
     errorWhenLogin: async ({ page }, use) => {
         const registeredUser = {
@@ -47,7 +50,6 @@ export const test = base.extend ({
         let app =  new App(page);
         await app.mainPage.open();
         await app.loginPage.gotoLogin();
-        await app.loginPage.incorrectLogin(registeredUser);
         await use({ app, registeredUser });         
     },
     updateSettings: async ({ page }, use) => {
